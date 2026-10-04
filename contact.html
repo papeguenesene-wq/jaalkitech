@@ -82,9 +82,17 @@
               <label for="contact-message">Message</label>
               <textarea id="contact-message" name="message" required></textarea>
 
-              <!-- La localisation est requise et doit déjà être autorisée dans le navigateur -->
+              <!-- Le contact choisit de partager sa position et autorise la demande du navigateur -->
+              <button
+                class="button button-light"
+                id="share-location"
+                type="button"
+                aria-describedby="location-status"
+              >
+                Partager ma géolocalisation
+              </button>
               <p class="muted" id="location-status" role="status" aria-live="polite">
-                La localisation est nécessaire pour envoyer le message. Activez-la et autorisez-la pour ce site dans les paramètres du navigateur.
+                Autorisez la localisation dans la fenêtre du navigateur pour l’ajouter au message WhatsApp.
               </p>
 
               <!-- Bouton de soumission du formulaire -->

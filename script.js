@@ -12,65 +12,53 @@ if (toggle) {
 
 // Sélection du formulaire de contact WhatsApp.
 const contactForm = document.querySelector("#whatsapp-contact-form");
+const locationButton = document.querySelector("#share-location");
 const locationStatus = document.querySelector("#location-status");
+let mapLink = "";
 
-function getLocationLink() {
-  if (!("geolocation" in navigator) || !navigator.permissions?.query) {
-    return Promise.reject(
-      new Error("Activez la localisation dans les paramètres de votre navigateur, puis réessayez."),
+// La demande de permission n'est déclenchée qu'après le clic du contact.
+if (locationButton && locationStatus) {
+  locationButton.addEventListener("click", () => {
+    if (!("geolocation" in navigator)) {
+      locationStatus.textContent =
+        "La géolocalisation n’est pas disponible dans ce navigateur.";
+      return;
+    }
+
+    locationButton.disabled = true;
+    locationStatus.textContent =
+      "Autorisez l’accès à votre position dans la fenêtre du navigateur…";
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        mapLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+        locationButton.textContent = "Géolocalisation ajoutée";
+        locationStatus.textContent =
+          "Votre position sera incluse dans le message WhatsApp.";
+        locationButton.disabled = false;
+      },
+      () => {
+        mapLink = "";
+        locationStatus.textContent =
+          "Position non ajoutée. Autorisez la localisation dans le navigateur et réessayez.";
+        locationButton.disabled = false;
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
     );
-  }
-
-  return navigator.permissions
-    .query({ name: "geolocation" })
-    .then((permission) => {
-      if (permission.state !== "granted") {
-        throw new Error(
-          "Pour envoyer votre demande, activez la localisation et autorisez-la pour ce site dans les paramètres du navigateur.",
-        );
-      }
-
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          ({ coords }) => {
-            resolve(
-              `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`,
-            );
-          },
-          () => {
-            reject(
-              new Error("Position inaccessible. Vérifiez que la localisation est activée sur votre appareil."),
-            );
-          },
-          { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
-        );
-      });
-    });
+  });
 }
 
-// Soumission du formulaire : on reconstruit un message prêt à être envoyé via WhatsApp.
+// Soumission du formulaire : la position doit être récupérée par le bouton dédié.
 if (contactForm) {
-  contactForm.addEventListener("submit", async (event) => {
+  contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    if (submitButton) {
-      submitButton.disabled = true;
-    }
-    if (locationStatus) {
-      locationStatus.textContent = "Vérification de la localisation autorisée…";
-    }
-
-    let mapLink;
-    try {
-      mapLink = await getLocationLink();
-    } catch (error) {
+    if (!mapLink) {
       if (locationStatus) {
-        locationStatus.textContent = error.message;
+        locationStatus.textContent =
+          "Veuillez d’abord cliquer sur « Partager ma géolocalisation » et autoriser l’accès dans votre navigateur.";
       }
-      if (submitButton) {
-        submitButton.disabled = false;
-      }
+      locationButton?.focus();
       return;
     }
 
