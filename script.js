@@ -12,50 +12,67 @@ if (toggle) {
 
 // Sélection du formulaire de contact WhatsApp.
 const contactForm = document.querySelector("#whatsapp-contact-form");
-let mapLink = "";
+const locationStatus = document.querySelector("#location-status");
 
-function setLocationFromBrowser() {
-  if (!("geolocation" in navigator)) {
-    return;
+function getLocationLink() {
+  if (!("geolocation" in navigator) || !navigator.permissions?.query) {
+    return Promise.reject(
+      new Error("Activez la localisation dans les paramètres de votre navigateur, puis réessayez."),
+    );
   }
 
-  // Le navigateur ne doit pas demander d'autorisation ici : on ne lance la géolocalisation
-  // que si la permission a déjà été accordée dans les paramètres du navigateur.
-  const permissionQuery = navigator.permissions?.query?.({ name: "geolocation" });
-
-  if (!permissionQuery) {
-    return;
-  }
-
-  permissionQuery
+  return navigator.permissions
+    .query({ name: "geolocation" })
     .then((permission) => {
       if (permission.state !== "granted") {
-        return;
+        throw new Error(
+          "Pour envoyer votre demande, activez la localisation et autorisez-la pour ce site dans les paramètres du navigateur.",
+        );
       }
 
-      navigator.geolocation.getCurrentPosition(
-        ({ coords }) => {
-          mapLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
-        },
-        () => {
-          mapLink = "";
-        },
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
-      );
-    })
-    .catch(() => {
-      // Le navigateur ne permet pas la vérification explicite de la permission.
-      // Dans ce cas, on reste silencieux et on n'ouvre pas d'invite.
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          ({ coords }) => {
+            resolve(
+              `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`,
+            );
+          },
+          () => {
+            reject(
+              new Error("Position inaccessible. Vérifiez que la localisation est activée sur votre appareil."),
+            );
+          },
+          { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+        );
+      });
     });
 }
 
-// Vérification silencieuse de la permission existante au chargement de la page.
-setLocationFromBrowser();
-
 // Soumission du formulaire : on reconstruit un message prêt à être envoyé via WhatsApp.
 if (contactForm) {
-  contactForm.addEventListener("submit", (event) => {
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.disabled = true;
+    }
+    if (locationStatus) {
+      locationStatus.textContent = "Vérification de la localisation autorisée…";
+    }
+
+    let mapLink;
+    try {
+      mapLink = await getLocationLink();
+    } catch (error) {
+      if (locationStatus) {
+        locationStatus.textContent = error.message;
+      }
+      if (submitButton) {
+        submitButton.disabled = false;
+      }
+      return;
+    }
 
     const formData = new FormData(contactForm);
     const message = [
@@ -63,7 +80,7 @@ if (contactForm) {
       `Je me nomme ${formData.get("nom")}`,
       `Mon adresse e-mail est : ${formData.get("email")}`,
       `Message ${formData.get("message")}`,
-      ...(mapLink ? [`Ma position : ${mapLink}`] : []),
+      `Ma position : ${mapLink}`,
     ].join("\n");
 
     const whatsappUrl = `https://wa.me/221774364759?text=${encodeURIComponent(message)}`;

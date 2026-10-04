@@ -82,6 +82,11 @@
               <label for="contact-message">Message</label>
               <textarea id="contact-message" name="message" required></textarea>
 
+              <!-- La localisation est requise et doit déjà être autorisée dans le navigateur -->
+              <p class="muted" id="location-status" role="status" aria-live="polite">
+                La localisation est nécessaire pour envoyer le message. Activez-la et autorisez-la pour ce site dans les paramètres du navigateur.
+              </p>
+
               <!-- Bouton de soumission du formulaire -->
               <button class="button" type="submit">Envoyer sur WhatsApp</button>
               <p class="muted" id="whatsapp-help">
