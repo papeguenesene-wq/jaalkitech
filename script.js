@@ -25,26 +25,41 @@ if (locationButton && locationStatus) {
       return;
     }
 
+    if (!window.isSecureContext) {
+      locationStatus.textContent =
+        "La géolocalisation nécessite une connexion sécurisée HTTPS (ou un serveur local).";
+      return;
+    }
+
     locationButton.disabled = true;
     locationStatus.textContent =
       "Autorisez l’accès à votre position dans la fenêtre du navigateur…";
 
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        mapLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
-        locationButton.textContent = "Géolocalisation ajoutée";
-        locationStatus.textContent =
-          "Votre position sera incluse dans le message WhatsApp.";
-        locationButton.disabled = false;
-      },
-      () => {
-        mapLink = "";
-        locationStatus.textContent =
-          "Position non ajoutée. Autorisez la localisation dans le navigateur et réessayez.";
-        locationButton.disabled = false;
-      },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
-    );
+    try {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          mapLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+          locationButton.textContent = "Géolocalisation ajoutée";
+          locationStatus.textContent =
+            "Votre position sera incluse dans le message WhatsApp.";
+          locationButton.disabled = false;
+        },
+        (error) => {
+          mapLink = "";
+          locationStatus.textContent =
+            error.code === error.PERMISSION_DENIED
+              ? "Autorisation refusée. Autorisez la localisation dans le navigateur, puis réessayez."
+              : "Position indisponible. Vérifiez que la localisation est activée sur votre appareil, puis réessayez.";
+          locationButton.disabled = false;
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+      );
+    } catch (error) {
+      locationButton.disabled = false;
+      locationStatus.textContent =
+        "Impossible de lancer la géolocalisation. Vérifiez les paramètres du navigateur et réessayez.";
+      console.error("Échec de la demande de géolocalisation :", error);
+    }
   });
 }
 

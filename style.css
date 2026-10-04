@@ -184,7 +184,30 @@ body {
   background: var(--soft);
   color: var(--ink);
 }
-
+.location-button {
+  justify-self: start;
+  background: var(--lime);
+  color: var(--dark);
+  border-color: var(--lime);
+  min-height: 0;
+  padding: 9px 14px;
+  font-weight: 800;
+}
+.location-button:hover {
+  background: #c0f04a;
+  border-color: #c0f04a;
+  color: var(--dark);
+}
+.location-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+.contact-card form > button[type="submit"] {
+  width: 100%;
+  justify-self: stretch;
+  justify-content: center;
+  text-align: center;
+}
 .actions {
   display: flex;
   gap: 10px;
