@@ -63,27 +63,18 @@ if (locationButton && locationStatus) {
   });
 }
 
-// Soumission du formulaire : la position doit être récupérée par le bouton dédié.
+// Soumission du formulaire : la position est ajoutée si le contact l'a partagée.
 if (contactForm) {
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    if (!mapLink) {
-      if (locationStatus) {
-        locationStatus.textContent =
-          "Veuillez d’abord cliquer sur « Partager ma géolocalisation » et autoriser l’accès dans votre navigateur.";
-      }
-      locationButton?.focus();
-      return;
-    }
-
     const formData = new FormData(contactForm);
     const message = [
       "Bonjour JAALKI-TECH SOLUTIONS,",
-      `Nom: ${formData.get("nom")}`,
-      `E-mail: ${formData.get("email")}`,
-      `Message: ${formData.get("message")}`,
-      `Ma position: ${mapLink}`,
+      `"Nom:" ${formData.get("nom")}`,
+      `"E-mail:" ${formData.get("email")}`,
+      `"Message:" ${formData.get("message")}`,
+      ...(mapLink ? [`"Ma position:" ${mapLink}`] : []),
     ].join("\n");
 
     const whatsappUrl = `https://wa.me/221774364759?text=${encodeURIComponent(message)}`;
