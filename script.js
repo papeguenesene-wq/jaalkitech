@@ -80,10 +80,10 @@ if (contactForm) {
     const formData = new FormData(contactForm);
     const message = [
       "Bonjour JAALKI-TECH SOLUTIONS,",
-      `Je me nomme ${formData.get("nom")}`,
-      `Mon adresse e-mail est : ${formData.get("email")}`,
-      `Message ${formData.get("message")}`,
-      `Ma position : ${mapLink}`,
+      `Nom: ${formData.get("nom")}`,
+      `E-mail: ${formData.get("email")}`,
+      `Message: ${formData.get("message")}`,
+      `Ma position: ${mapLink}`,
     ].join("\n");
 
     const whatsappUrl = `https://wa.me/221774364759?text=${encodeURIComponent(message)}`;
