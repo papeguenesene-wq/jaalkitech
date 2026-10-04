@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="fr">
+  <!-- Début de la page de contact : formulaire destiné à envoyer un message WhatsApp -->
   <head>
+    <!-- Métadonnées de la page et chargement du style global -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -12,8 +14,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- En-tête commun au site -->
     <header class="site-header">
       <div class="container header-inner">
+        <!-- Logo du site avec retour à l'accueil -->
         <a
           class="brand"
           href="index.html"
@@ -22,6 +26,7 @@
           <img class="brand-logo" src="assets/WhatsApp%20Image%202026-10-04%20at%2000.43.53.jpeg" alt="" width="48" height="48" />
           <span>JAALKI-TECH SOLUTIONS</span>
         </a>
+        <!-- Bouton de menu pour les écrans mobiles -->
         <button
           class="menu-toggle"
           aria-label="Ouvrir le menu"
@@ -29,6 +34,7 @@
         >
           ☰
         </button>
+        <!-- Navigation principale -->
         <nav class="nav">
           <a class="" href="index.html">Accueil</a
           ><a class="" href="a-propos.html">À propos</a
@@ -37,13 +43,18 @@
         </nav>
       </div>
     </header>
+
+    <!-- Contenu principal : formulaire de contact -->
     <main>
+      <!-- Bandeau haut de page avec titre de section -->
       <section class="page-hero">
         <div class="container">
           <div class="eyebrow">CONTACT</div>
           <h1>Échangeons sur vos besoins et les solutions possibles.</h1>
         </div>
       </section>
+
+      <!-- Bloc contenant le texte d’introduction et le formulaire -->
       <section class="section">
         <div class="container contact-grid">
           <div>
@@ -56,17 +67,22 @@
               e-learning.
             </p>
           </div>
+          <!-- Carte du formulaire de contact -->
           <div class="contact-card">
             <form id="whatsapp-contact-form">
+              <!-- Champ du nom -->
               <label for="contact-name">Nom</label>
               <input id="contact-name" type="text" name="nom" autocomplete="name" required />
 
+              <!-- Champ de l’e-mail -->
               <label for="contact-email">Adresse e-mail</label>
               <input id="contact-email" type="email" name="email" autocomplete="email" required />
 
+              <!-- Zone de texte du message -->
               <label for="contact-message">Message</label>
               <textarea id="contact-message" name="message" required></textarea>
 
+              <!-- Bouton pour ajouter la localisation de l’utilisateur -->
               <button
                 class="button button-light"
                 id="share-location"
@@ -79,6 +95,7 @@
                 Votre navigateur demandera l’autorisation. La position ne sera ajoutée que si vous l’autorisez.
               </p>
 
+              <!-- Bouton de soumission du formulaire -->
               <button class="button" type="submit">Envoyer sur WhatsApp</button>
               <p class="muted" id="whatsapp-help">
                 WhatsApp s’ouvrira avec votre message prérempli. Vous pourrez le vérifier avant de l’envoyer.
@@ -88,6 +105,8 @@
         </div>
       </section>
     </main>
+
+    <!-- Pied de page standard du site -->
     <footer class="site-footer">
       <div class="container footer-inner">
         <div>
@@ -102,6 +121,8 @@
         </div>
       </div>
     </footer>
+
+    <!-- Chargement du script JavaScript qui gère le formulaire et le menu -->
     <script src="script.js"></script>
   </body>
 </html>

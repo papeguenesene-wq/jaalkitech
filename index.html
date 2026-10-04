@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="fr">
+  <!-- Début du document HTML : indique que la page est en français -->
   <head>
+    <!-- Métadonnées du document : encodage, compatibilité mobile et description SEO -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -8,12 +10,16 @@
       content="JAALKI-TECH SOLUTIONS — solutions numériques et informatiques."
     />
     <title>Accueil | JAALKI-TECH SOLUTIONS</title>
+    <!-- Icône du site affichée dans l'onglet du navigateur -->
     <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <!-- Lien vers la feuille de style principale du site -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- En-tête du site : logo, nom, bouton du menu et navigation principale -->
     <header class="site-header">
       <div class="container header-inner">
+        <!-- Logo et nom de l'entreprise, renvoyant vers la page d'accueil -->
         <a
           class="brand"
           href="index.html"
@@ -22,6 +28,7 @@
           <img class="brand-logo" src="assets/WhatsApp%20Image%202026-10-04%20at%2000.43.53.jpeg" alt="" width="48" height="48" />
           <span>JAALKI-TECH SOLUTIONS</span>
         </a>
+        <!-- Bouton mobile pour ouvrir/fermer le menu sur petit écran -->
         <button
           class="menu-toggle"
           aria-label="Ouvrir le menu"
@@ -29,6 +36,7 @@
         >
           ☰
         </button>
+        <!-- Navigation principale entre les pages du site -->
         <nav class="nav">
           <a class="active" href="index.html">Accueil</a
           ><a class="" href="a-propos.html">À propos</a
@@ -37,7 +45,10 @@
         </nav>
       </div>
     </header>
+
+    <!-- Contenu principal de la page d'accueil -->
     <main>
+      <!-- Section d'introduction : slogan et appel à l'action -->
       <section class="hero">
         <div class="container hero-grid">
           <div>
@@ -57,6 +68,7 @@
               <a class="button" href="projets.html">Découvrir mes projets</a>
             </div>
           </div>
+          <!-- Illustration visuelle du positionnement de l'entreprise -->
           <div
             class="abstract"
             aria-label="Illustration abstraite des domaines de l'entreprise"
@@ -66,12 +78,15 @@
           </div>
         </div>
       </section>
+
+      <!-- Section de présentation des domaines d'expertise -->
       <section class="section">
         <div class="container">
           <div class="section-heading">
             <h2>Une expertise à la croisée des technologies et des usages</h2>
           </div>
           <div class="cards">
+            <!-- Carte 1 : réseaux, systèmes et développement -->
             <article class="card">
               <h3>Réseaux &amp; systèmes &amp; développement</h3>
               <p>
@@ -80,6 +95,7 @@
                 utilisateurs.
               </p>
             </article>
+            <!-- Carte 2 : services numériques -->
             <article class="card">
               <h3>Services numériques</h3>
               <p>
@@ -87,6 +103,7 @@
                 outils et l’automatisation des tâches techniques.
               </p>
             </article>
+            <!-- Carte 3 : technologie éducative -->
             <article class="card">
               <h3>Technologie éducative</h3>
               <p>
@@ -97,6 +114,8 @@
           </div>
         </div>
       </section>
+
+      <!-- Section "À propos" : profil technique et orienté usages -->
       <section class="section section-soft">
         <div class="container about-grid">
           <div>
@@ -113,9 +132,12 @@
               >
             </div>
           </div>
+          <!-- Bloc visuel décoratif de la section à propos -->
           <div class="about-panel" aria-hidden="true"></div>
         </div>
       </section>
+
+      <!-- Section présentant un projet de portfolio personnel -->
       <section class="section featured">
         <div class="container">
           <div class="eyebrow">PROJET DE portfolio personnel</div>
@@ -140,6 +162,8 @@
           </div>
         </div>
       </section>
+
+      <!-- Section de call-to-action pour encourager le contact -->
       <section class="cta">
         <div class="container cta-inner">
           <div>
@@ -152,6 +176,8 @@
         </div>
       </section>
     </main>
+
+    <!-- Pied de page du site : identité, slogan et liens utiles -->
     <footer class="site-footer">
       <div class="container footer-inner">
         <div>
@@ -166,6 +192,8 @@
         </div>
       </div>
     </footer>
+
+    <!-- Script JavaScript du site chargé en fin de page pour les interactions -->
     <script src="script.js"></script>
   </body>
 </html>
