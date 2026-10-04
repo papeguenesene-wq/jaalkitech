@@ -67,6 +67,18 @@
               <label for="contact-message">Message</label>
               <textarea id="contact-message" name="message" required></textarea>
 
+              <button
+                class="button button-light"
+                id="share-location"
+                type="button"
+                aria-describedby="location-status"
+              >
+                Ajouter ma position (facultatif)
+              </button>
+              <p class="muted" id="location-status" role="status" aria-live="polite">
+                Votre navigateur demandera l’autorisation. La position ne sera ajoutée que si vous l’autorisez.
+              </p>
+
               <button class="button" type="submit">Envoyer sur WhatsApp</button>
               <p class="muted" id="whatsapp-help">
                 WhatsApp s’ouvrira avec votre message prérempli. Vous pourrez le vérifier avant de l’envoyer.
